@@ -28,7 +28,7 @@ class ViewController: UIViewController, URLSessionDelegate, UITextFieldDelegate 
     let motionOperationQueue = OperationQueue()
     let calibrationOperationQueue = OperationQueue()
     
-    var ringBuffer = RingBuffer()
+    var ringBuffer = RingBuffer(withSize:50)
     let animation = CATransition()
     let motion = CMMotionManager()
     

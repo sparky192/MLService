@@ -8,22 +8,27 @@
 
 import UIKit
 
-let BUFFER_SIZE = 50
+var BUFFER_SIZE = 50
 
 class RingBuffer: NSObject {
+    var size:Int
+    lazy var x = [Double](repeating:0, count:size)
+    lazy var y = [Double](repeating:0, count:size)
+    lazy var z = [Double](repeating:0, count:size)
     
-    var x = [Double](repeating:0, count:BUFFER_SIZE)
-    var y = [Double](repeating:0, count:BUFFER_SIZE)
-    var z = [Double](repeating:0, count:BUFFER_SIZE)
+    init(withSize size:Int) {
+        self.size = size
+    }
     
     var head:Int = 0 {
         didSet{
-            if(head >= BUFFER_SIZE){
+            if(head >= self.size){
                 head = 0
             }
             
         }
     }
+    
     
     func addNewData(xData:Double,yData:Double,zData:Double){
         x[head] = xData
@@ -34,10 +39,10 @@ class RingBuffer: NSObject {
     }
     
     func getDataAsVector()->[Double]{
-        var allVals = [Double](repeating:0, count:3*BUFFER_SIZE)
+        var allVals = [Double](repeating:0, count:3*self.size)
         
-        for i in 0..<BUFFER_SIZE {
-            let idx = (head+i)%BUFFER_SIZE
+        for i in 0..<self.size {
+            let idx = (head+i)%self.size
             allVals[3*i] = x[idx]
             allVals[3*i+1] = y[idx]
             allVals[3*i+2] = z[idx]
