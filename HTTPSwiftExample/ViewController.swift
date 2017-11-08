@@ -15,12 +15,12 @@
 //    ifconfig |grep inet   
 // to see what your public facing IP address is, the ip address can be used here
 //let SERVER_URL = "http://erics-macbook-pro.local:8000" // change this for your server name!!!
-let SERVER_URL = "http://10.8.116.92:8000" // change this for your server name!!!
+let SERVER_URL = "http://10.8.123.224:8000" // change this for your server name!!!
 
 import UIKit
 import CoreMotion
 
-class ViewController: UIViewController, URLSessionDelegate {
+class ViewController: UIViewController, URLSessionDelegate, UITextFieldDelegate {
     
     // MARK: Class Properties
     var session = URLSession()
@@ -44,6 +44,7 @@ class ViewController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var leftArrow: UILabel!
     @IBOutlet weak var largeMotionMagnitude: UIProgressView!
     
+    @IBOutlet weak var textField: UITextField!
     // MARK: Class Properties with Observers
     enum CalibrationStage {
         case notCalibrating
@@ -254,6 +255,8 @@ class ViewController: UIViewController, URLSessionDelegate {
         startMotionUpdates()
         
         dsid = 2 // set this and it will update UI
+        
+        //self.textField.delegate = self
     }
 
     //MARK: Get New Dataset ID
@@ -352,6 +355,7 @@ class ViewController: UIViewController, URLSessionDelegate {
                                                                         }
                                                                     }
                                                                     else{
+                                                                        print("Response:\n",response)
                                                                         let jsonDictionary = self.convertDataToDictionary(with: data)
                                                                         
                                                                         let labelResponse = jsonDictionary["prediction"]!
@@ -422,6 +426,39 @@ class ViewController: UIViewController, URLSessionDelegate {
         })
         
         dataTask.resume() // start the task
+        
+    }
+    
+
+    @IBAction func selectNewModel(_ sender: UIButton) {
+        self.textField.resignFirstResponder()
+        
+        let dsid = Int(textField.text!)
+        print(dsid)
+        self.dsid = dsid!
+        
+//        let baseURL = "\(SERVER_URL)/GetNewDatasetId"
+//
+//        let getUrl = URL(string: baseURL)
+//        let request: URLRequest = URLRequest(url: getUrl!)
+//        let dataTask : URLSessionDataTask = self.session.dataTask(with: request,
+//                                                                  completionHandler:{(data, response, error) in
+//                                                                    if(error != nil){
+//                                                                        print("Response:\n%@",response!)
+//                                                                    }
+//                                                                    else{
+//                                                                        let jsonDictionary = self.convertDataToDictionary(with: data)
+//
+//                                                                        // This better be an integer
+//                                                                        if let dsid = jsonDictionary["dsid"]{
+//                                                                            self.dsid = dsid as! Int
+//                                                                        }
+//                                                                    }
+//
+//        })
+//
+//        dataTask.resume() // start the task
+        
         
     }
     
