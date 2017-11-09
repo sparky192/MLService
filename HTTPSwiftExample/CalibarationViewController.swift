@@ -13,7 +13,15 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
     
     // MARK: UIElements
     @IBOutlet weak var dsidLabel: UILabel!
+    @IBOutlet weak var wCalibrationButton: UIButton!
+    @IBOutlet weak var rCalibrationButton: UIButton!
+    @IBOutlet weak var sCalibrationButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var dsidButton: UIButton!
     
+    @IBOutlet weak var stillImageView: UIImageView!
+    @IBOutlet weak var runningImageView: UIImageView!
+    @IBOutlet weak var walkingImageView: UIImageView!
     
     
     // MARK: Class Properties
@@ -53,6 +61,9 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.prepareButtons()
+        self.prepareImageViews()
+        
         let sessionConfig = URLSessionConfiguration.ephemeral
         
         sessionConfig.timeoutIntervalForRequest = 5.0
@@ -71,6 +82,55 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
         self.dsid = 2
 
         // Do any additional setup after loading the view.
+    }
+    
+    // MARK: Styling View
+    
+    func prepareButtons() {
+        wCalibrationButton.tintColor = .newBlue
+        wCalibrationButton.layer.borderColor = UIColor.newBlue.cgColor
+        wCalibrationButton.layer.borderWidth = 1
+        wCalibrationButton.layer.cornerRadius = 5
+        wCalibrationButton.setTitleColor(.newBlue, for: .normal)
+
+        
+        rCalibrationButton.tintColor = .newRed
+        rCalibrationButton.layer.borderColor = UIColor.newRed.cgColor
+        rCalibrationButton.layer.borderWidth = 1
+        rCalibrationButton.layer.cornerRadius = 5
+        rCalibrationButton.setTitleColor(.newRed, for: .normal)
+
+        
+        sCalibrationButton.tintColor = .newOrange
+        sCalibrationButton.layer.borderColor = UIColor.newOrange.cgColor
+        sCalibrationButton.layer.borderWidth = 1
+        sCalibrationButton.layer.cornerRadius = 5
+        sCalibrationButton.setTitleColor(.newOrange, for: .normal)
+        
+        doneButton.tintColor = .newGreen
+        doneButton.layer.borderColor = UIColor.newGreen.cgColor
+        doneButton.layer.borderWidth = 1
+        doneButton.layer.cornerRadius = 5
+        doneButton.setTitleColor(.newGreen, for: .normal)
+        
+        dsidButton.tintColor = .newYellow
+        dsidButton.layer.borderColor = UIColor.newYellow.cgColor
+        dsidButton.layer.borderWidth = 1
+        dsidButton.layer.cornerRadius = 5
+        dsidButton.setTitleColor(.newYellow, for: .normal)
+        
+    }
+    
+    func prepareImageViews() {
+        runningImageView.image = runningImageView.image!.withRenderingMode(.alwaysTemplate)
+        runningImageView.tintColor = .newRed
+
+        
+        walkingImageView.image = walkingImageView.image!.withRenderingMode(.alwaysTemplate)
+        walkingImageView.tintColor = .newBlue
+        
+        stillImageView.image = stillImageView.image!.withRenderingMode(.alwaysTemplate)
+        stillImageView.tintColor = .newOrange
     }
     
     // MARK: Callibaration

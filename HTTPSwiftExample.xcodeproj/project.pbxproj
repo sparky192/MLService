@@ -14,6 +14,8 @@
 		B67483E21ACA2D6800A9970E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B67483E11ACA2D6800A9970E /* Images.xcassets */; };
 		B67483E51ACA2D6800A9970E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B67483E31ACA2D6800A9970E /* LaunchScreen.xib */; };
 		B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B694B0191FA377E4009A4277 /* RingBuffer.swift */; };
+		C012D35C1FB4C39C00DD59E5 /* colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C012D35B1FB4C39C00DD59E5 /* colors.swift */; };
+		C012D35E1FB4DB3500DD59E5 /* PredictionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C012D35D1FB4DB3500DD59E5 /* PredictionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		B67483EF1ACA2D6800A9970E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B67483F01ACA2D6800A9970E /* HTTPSwiftExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSwiftExampleTests.swift; sourceTree = "<group>"; };
 		B694B0191FA377E4009A4277 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		C012D35B1FB4C39C00DD59E5 /* colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colors.swift; sourceTree = "<group>"; };
+		C012D35D1FB4DB3500DD59E5 /* PredictionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				B67483E31ACA2D6800A9970E /* LaunchScreen.xib */,
 				B67483D81ACA2D6800A9970E /* Supporting Files */,
 				9B60BA7F1FB3837C0091ADF8 /* CalibarationViewController.swift */,
+				C012D35B1FB4C39C00DD59E5 /* colors.swift */,
+				C012D35D1FB4DB3500DD59E5 /* PredictionViewController.swift */,
 			);
 			path = HTTPSwiftExample;
 			sourceTree = "<group>";
@@ -171,7 +177,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B67483DD1ACA2D6800A9970E /* ViewController.swift in Sources */,
+				C012D35C1FB4C39C00DD59E5 /* colors.swift in Sources */,
 				B67483DB1ACA2D6800A9970E /* AppDelegate.swift in Sources */,
+				C012D35E1FB4DB3500DD59E5 /* PredictionViewController.swift in Sources */,
 				9B60BA801FB3837C0091ADF8 /* CalibarationViewController.swift in Sources */,
 				B694B01A1FA377E4009A4277 /* RingBuffer.swift in Sources */,
 			);
