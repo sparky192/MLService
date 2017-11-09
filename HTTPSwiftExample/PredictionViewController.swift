@@ -112,12 +112,22 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
         switch response {
         case "['running']":
             predictionLabel.text = "Running"
+            imageView.image = #imageLiteral(resourceName: "running")
+            imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = .newRed
+            
             break
         case "['walking']":
             predictionLabel.text = "Walking"
+            imageView.image = #imageLiteral(resourceName: "pedestrian-walking")
+            imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = .newBlue
             break
         case "['still']":
             predictionLabel.text = "Still"
+            imageView.image = #imageLiteral(resourceName: "smartphone-call 2x")
+            imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = .newBlue
             break
         default:
             print("Unknown")
