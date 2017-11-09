@@ -71,10 +71,10 @@
 				B67483DE1ACA2D6800A9970E /* Main.storyboard */,
 				B67483E11ACA2D6800A9970E /* Images.xcassets */,
 				B67483E31ACA2D6800A9970E /* LaunchScreen.xib */,
-				B67483D81ACA2D6800A9970E /* Supporting Files */,
 				9B60BA7F1FB3837C0091ADF8 /* CalibarationViewController.swift */,
 				C012D35B1FB4C39C00DD59E5 /* colors.swift */,
 				C012D35D1FB4DB3500DD59E5 /* PredictionViewController.swift */,
+				B67483D81ACA2D6800A9970E /* Supporting Files */,
 			);
 			path = HTTPSwiftExample;
 			sourceTree = "<group>";
@@ -135,7 +135,7 @@
 				TargetAttributes = {
 					B67483D41ACA2D6800A9970E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = D6KDC363XA;
+						DevelopmentTeam = BFP4MM8ANM;
 						LastSwiftMigration = 0810;
 					};
 				};
@@ -308,7 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D6KDC363XA;
+				DEVELOPMENT_TEAM = BFP4MM8ANM;
 				INFOPLIST_FILE = HTTPSwiftExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -322,7 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D6KDC363XA;
+				DEVELOPMENT_TEAM = BFP4MM8ANM;
 				INFOPLIST_FILE = HTTPSwiftExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
