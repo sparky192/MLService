@@ -84,7 +84,7 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
         animation.type = kCATransitionFade
         animation.duration = 0.5
         
-        self.dsid = 2
+        self.dsid = 6
 
         // Do any additional setup after loading the view.
     }

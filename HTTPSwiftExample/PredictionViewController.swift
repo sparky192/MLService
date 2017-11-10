@@ -106,7 +106,7 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
             self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
             let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
             
-            print("Mag: ", mag)
+            //print("Mag: ", mag)
         }
     }
     
@@ -166,7 +166,10 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
                                                                         
                                                                         let labelResponse = jsonDictionary["prediction"]!
                                                                         print(labelResponse)
-                                                                        self.displayLabelResponse(labelResponse as! String)
+                                                                        DispatchQueue.main.async {
+                                                                            self.displayLabelResponse(labelResponse as! String)
+                                                                        }
+                                                                        
                                                                         
                                                                     }
                                                                     
@@ -206,7 +209,13 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
     
     // create a GET request for server to update the ML model with current data
         let baseURL = "\(SERVER_URL)/UpdateModel"
-        let query = "?dsid=\(self.dsid)&classifier=\(self.label)"
+        var id = 0
+        if self.label == Classifier.KNN {
+            id = 0
+        }else if self.label == Classifier.SVM{
+            id = 1
+        }
+        let query = "?dsid=\(self.dsid!)&classifier=\(id)"
         
         let getUrl = URL(string: baseURL + query)
         let request: URLRequest = URLRequest(url: getUrl!)
