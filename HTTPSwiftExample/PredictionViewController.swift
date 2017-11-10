@@ -43,6 +43,16 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
         self.prepareImageView()
         self.prepareButtons()
         self.segmentControl.tintColor = .newBlue
+        
+        let sessionConfig = URLSessionConfiguration.ephemeral
+        
+        sessionConfig.timeoutIntervalForRequest = 5.0
+        sessionConfig.timeoutIntervalForResource = 8.0
+        sessionConfig.httpMaximumConnectionsPerHost = 1
+        
+        self.session = URLSession(configuration: sessionConfig,
+                                  delegate: self,
+                                  delegateQueue:self.operationQueue)
     }
     
     func prepareLabel() {
@@ -198,7 +208,7 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
         let baseURL = "\(SERVER_URL)/UpdateModel"
         let query = "?dsid=\(self.dsid)&classifier=\(self.label)"
         
-        let getUrl = URL(string: baseURL+query)
+        let getUrl = URL(string: baseURL + query)
         let request: URLRequest = URLRequest(url: getUrl!)
         let dataTask : URLSessionDataTask = self.session.dataTask(with: request,
                                                 completionHandler:{(data, response, error) in
