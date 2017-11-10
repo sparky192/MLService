@@ -337,14 +337,50 @@
                                     <constraint firstAttribute="width" constant="260" id="ZIY-NY-kPg"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhZ-FE-2ZN">
+                                <rect key="frame" x="259" y="607" width="100" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="LeV-k5-o7h"/>
+                                    <constraint firstAttribute="height" constant="40" id="rER-yQ-Fin"/>
+                                </constraints>
+                                <state key="normal" title="Predict"/>
+                                <connections>
+                                    <action selector="predictButtonPressed:" destination="dJo-sQ-1nB" eventType="touchUpInside" id="2NI-hb-iUH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOx-jR-Ma8">
+                                <rect key="frame" x="16" y="607" width="100" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="IER-hP-rf3"/>
+                                    <constraint firstAttribute="height" constant="40" id="tHj-tc-SFr"/>
+                                </constraints>
+                                <state key="normal" title="Update Model"/>
+                                <connections>
+                                    <action selector="updateModelButtonPressed:" destination="dJo-sQ-1nB" eventType="touchUpInside" id="hsh-ZR-sw1"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JTv-DB-cKc">
+                                <rect key="frame" x="16" y="480" width="343" height="29"/>
+                                <segments>
+                                    <segment title="KNN"/>
+                                    <segment title="SVM"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gOx-jR-Ma8" firstAttribute="leading" secondItem="aH6-Lp-gCy" secondAttribute="leadingMargin" id="4bz-9m-80a"/>
                             <constraint firstItem="7YX-xZ-RwY" firstAttribute="trailing" secondItem="aH6-Lp-gCy" secondAttribute="trailingMargin" id="BKF-iW-eZl"/>
                             <constraint firstItem="7YX-xZ-RwY" firstAttribute="leading" secondItem="aH6-Lp-gCy" secondAttribute="leadingMargin" id="JeN-iD-odc"/>
+                            <constraint firstItem="JTv-DB-cKc" firstAttribute="top" secondItem="7YX-xZ-RwY" secondAttribute="bottom" constant="30" id="QSz-pe-BLF"/>
                             <constraint firstItem="7YX-xZ-RwY" firstAttribute="top" secondItem="JCd-Fc-h9q" secondAttribute="bottom" constant="48" id="SeC-bl-hMZ"/>
+                            <constraint firstItem="QhZ-FE-2ZN" firstAttribute="trailing" secondItem="aH6-Lp-gCy" secondAttribute="trailingMargin" id="TlS-se-92i"/>
+                            <constraint firstItem="WC9-yc-pGx" firstAttribute="top" secondItem="QhZ-FE-2ZN" secondAttribute="bottom" constant="20" id="ViH-vv-nIF"/>
                             <constraint firstItem="JCd-Fc-h9q" firstAttribute="centerX" secondItem="aH6-Lp-gCy" secondAttribute="centerX" id="ZZ2-Tj-jne"/>
+                            <constraint firstItem="JTv-DB-cKc" firstAttribute="trailing" secondItem="aH6-Lp-gCy" secondAttribute="trailingMargin" id="cJk-GE-g4d"/>
                             <constraint firstItem="JCd-Fc-h9q" firstAttribute="top" secondItem="3cg-Qk-LnJ" secondAttribute="bottom" constant="48" id="cdP-IG-xrm"/>
+                            <constraint firstItem="WC9-yc-pGx" firstAttribute="top" secondItem="gOx-jR-Ma8" secondAttribute="bottom" constant="20" id="e0c-AR-Kgd"/>
+                            <constraint firstItem="JTv-DB-cKc" firstAttribute="leading" secondItem="aH6-Lp-gCy" secondAttribute="leadingMargin" id="odE-CZ-IRD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Predict" leftItemsSupplementBackButton="YES" id="uIN-og-XVU">
@@ -352,7 +388,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="JCd-Fc-h9q" id="P0x-W2-bcQ"/>
+                        <outlet property="predictButton" destination="QhZ-FE-2ZN" id="1p2-G1-h77"/>
                         <outlet property="predictionLabel" destination="7YX-xZ-RwY" id="3Lr-NN-e5k"/>
+                        <outlet property="segmentControl" destination="JTv-DB-cKc" id="7ZK-Ga-VHn"/>
+                        <outlet property="updateModel" destination="gOx-jR-Ma8" id="Nrd-1R-sYP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OkD-h2-MS8" userLabel="First Responder" sceneMemberID="firstResponder"/>

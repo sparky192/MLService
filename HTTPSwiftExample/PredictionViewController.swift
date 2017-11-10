@@ -15,6 +15,9 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
     //MARK: UI Elements
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var predictionLabel: UILabel!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var predictButton: UIButton!
+    @IBOutlet weak var updateModel: UIButton!
     
     
     //MARK: Class Variables
@@ -25,13 +28,21 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
     var session = URLSession()
     let operationQueue = OperationQueue()
     var dsid: Int?
+    var alert:UIAlertController?
+    var label = Classifier.KNN
+    
+    enum Classifier {
+        case KNN
+        case SVM
+    }
     
     
 
     override func viewDidLoad() {
         self.prepareLabel()
         self.prepareImageView()
-        self.startMotionUpdates()
+        self.prepareButtons()
+        self.segmentControl.tintColor = .newBlue
     }
     
     func prepareLabel() {
@@ -44,6 +55,30 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
         imageView.tintColor = .newOrange
     }
     
+    func prepareButtons() {
+        updateModel.setTitleColor(.newYellow, for: .normal)
+        updateModel.layer.borderColor = UIColor.newYellow.cgColor
+        updateModel.layer.cornerRadius = 5
+        updateModel.layer.borderWidth = 1
+        
+        predictButton.setTitleColor(.newGreen, for: .normal)
+        predictButton.layer.borderColor = UIColor.newGreen.cgColor
+        predictButton.layer.cornerRadius = 5
+        predictButton.layer.borderWidth = 1
+    }
+    
+    func prepareAlertView(title:String, text: String) {
+        alert = UIAlertController(title: title, message: text, preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert!, animated: true, completion: nil)
+    }
+    
+    func endPrediction() {
+        self.alert?.dismiss(animated: true, completion: nil)
+        self.motion.stopDeviceMotionUpdates()
+        self.getPrediction(ringBuffer.getDataAsVector())
+        self.ringBuffer.reset()
+   
+    }
     
     // MARK: Core Motion Updates
     func startMotionUpdates(){
@@ -61,24 +96,46 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
             self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
             let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
             
-            //**** Uncomment to reuqest prediction from server ****
-            //self.getPrediction(self.ringBuffer.getDataAsVector())
             print("Mag: ", mag)
         }
     }
     
+    //MARK: Button Actions
     
+    @IBAction func updateModelButtonPressed(_ sender: Any) {
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            label = Classifier.KNN
+
+        } else if self.segmentControl.selectedSegmentIndex == 1  {
+            label = Classifier.SVM
+        }
+        
+        self.makeModel()
+    }
+    
+    @IBAction func predictButtonPressed(_ sender: Any) {
+        
+        self.prepareAlertView(title: "Predicting", text: "Move or stay still to get Prediction")
+        self.startMotionUpdates()
+     
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: {_ in
+            
+            self.endPrediction()
+            
+        })
+        
+    }
     
     //MARK: Comm with Server
     func getPrediction(_ array:[Double]){
-        let baseURL = "\(SERVER_URL)/PredictMovement"
+        let baseURL = "\(SERVER_URL)/PredictOne"
         let postUrl = URL(string: "\(baseURL)")
         
         // create a custom HTTP POST request
         var request = URLRequest(url: postUrl!)
         
         // data to send in body of post request (send arguments as json)
-        let jsonUpload:NSDictionary = ["feature":array, "dsid":self.dsid!]
+        let jsonUpload:NSDictionary = ["feature":array, "dsid":self.dsid]
         
         
         let requestBody:Data? = self.convertDictionaryToData(with:jsonUpload)
@@ -133,6 +190,36 @@ class PredictionViewController: UIViewController, URLSessionDelegate {
             print("Unknown")
             break
         }
+    }
+    
+    func makeModel() {
+    
+    // create a GET request for server to update the ML model with current data
+        let baseURL = "\(SERVER_URL)/UpdateModel"
+        let query = "?dsid=\(self.dsid)&classifier=\(self.label)"
+        
+        let getUrl = URL(string: baseURL+query)
+        let request: URLRequest = URLRequest(url: getUrl!)
+        let dataTask : URLSessionDataTask = self.session.dataTask(with: request,
+                                                completionHandler:{(data, response, error) in
+                                                        // handle error!
+                                                                    if (error != nil) {
+                                                                        if let res = response{
+                                                                            print("Response:\n",res)
+                                                                        }
+                                                                    }
+                                                                    else{
+                                                                        let jsonDictionary = self.convertDataToDictionary(with: data)
+                                                                        
+                                                                        if let resubAcc = jsonDictionary["resubAccuracy"]{
+                                                                            print("Resubstitution Accuracy is", resubAcc)
+                                                                        }
+                                                                    }
+                                                                    
+        })
+        
+        dataTask.resume() // start the task
+    
     }
     
     
