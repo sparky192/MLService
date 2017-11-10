@@ -50,5 +50,13 @@ class RingBuffer: NSObject {
         
         return allVals
     }
+    
+    func reset() {
+        x = [Double](repeating:0, count:size)
+        y = [Double](repeating:0, count:size)
+        z = [Double](repeating:0, count:size)
+        head = 0
+        
+    }
 
 }

@@ -39,6 +39,10 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
     
     var isWaitingForMotionData = false
     
+    var activityIndicator:UIActivityIndicatorView?
+    var alert:UIAlertController?
+    var timer = Timer()
+    var label  = CalibrationStage.notCalibrating
     
     enum CalibrationStage {
         case notCalibrating
@@ -63,6 +67,7 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
         
         self.prepareButtons()
         self.prepareImageViews()
+        //self.prepareActivityIndicator()
         
         let sessionConfig = URLSessionConfiguration.ephemeral
         
@@ -85,6 +90,23 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
     }
     
     // MARK: Styling View
+    
+    func prepareActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        
+        // Position Activity Indicator in the center of the main view
+        activityIndicator!.center = view.center
+        
+        // If needed, you can prevent Acivity Indicator from hiding when stopAnimating() is called
+        activityIndicator!.hidesWhenStopped = true
+        
+        self.view.addSubview(activityIndicator!)
+    }
+    
+    func prepareAlertView(title:String, text: String) {
+        alert = UIAlertController(title: title, message: text, preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert!, animated: true, completion: nil)
+    }
     
     func prepareButtons() {
         wCalibrationButton.tintColor = .newBlue
@@ -133,15 +155,54 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
         stillImageView.tintColor = .newOrange
     }
     
+    func endCalibration() {
+        self.alert?.dismiss(animated: true, completion: nil)
+        self.motion.stopDeviceMotionUpdates()
+        self.sendFeatures(ringBuffer.getDataAsVector(), withLabel: label)
+        self.ringBuffer.reset()
+        label = CalibrationStage.notCalibrating
+
+    }
+    
     // MARK: Callibaration
     
     @IBAction func calibarateWalking(_ sender: UIButton) {
+        self.prepareAlertView(title: "Walking", text: "Walk to Calibrate")
+        self.startMotionUpdates()
+        label = CalibrationStage.walking
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: {_ in
+            
+            self.endCalibration()
+            
+        })
+        
     }
     
     @IBAction func calibarateRunning(_ sender: UIButton) {
+        
+        self.prepareAlertView(title: "Running", text: "Run to Calibrate")
+        self.startMotionUpdates()
+        label = CalibrationStage.running
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: {_ in
+            
+            self.endCalibration()
+            
+        })
     }
     
     @IBAction func calibarateStill(_ sender: UIButton) {
+        
+        self.prepareAlertView(title: "Still", text: "Hold Still to Calibrate")
+        self.startMotionUpdates()
+        label = CalibrationStage.still
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: {_ in
+            
+            self.endCalibration()
+            
+        })
     }
     
    
@@ -163,7 +224,7 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
             
             self.ringBuffer.addNewData(xData: accel.x, yData: accel.y, zData: accel.z)
             let mag = fabs(accel.x)+fabs(accel.y)+fabs(accel.z)
-            
+            print(mag)
             
            
         }
@@ -234,7 +295,9 @@ class CalibarationViewController: UIViewController, URLSessionDelegate {
     }
     
     @IBAction func doneCalibaratio(_ sender: Any) {
+        
     }
+    
     
     //MARK: JSON Conversion Functions
     func convertDictionaryToData(with jsonUpload:NSDictionary) -> Data?{
